@@ -1,7 +1,7 @@
 // Define your api here
 var productListApiUrl = 'http://127.0.0.1:5000/getProducts';
 var uomListApiUrl = 'http://127.0.0.1:5000/getUOM';
-var productSaveApiUrl = 'http://127.0.0.1:5000/insertProduct';
+var productSaveApiUrl = 'https://quickmart-api.onrender.com/insertProduct';
 var productDeleteApiUrl = 'http://127.0.0.1:5000/deleteProduct';
 var orderListApiUrl = 'http://127.0.0.1:5000/getAllOrders';
 var orderSaveApiUrl = 'http://127.0.0.1:5000/insertOrder';
@@ -9,15 +9,34 @@ var orderSaveApiUrl = 'http://127.0.0.1:5000/insertOrder';
 // For product drop in order
 var productsApiUrl = 'https://fakestoreapi.com/products';
 
+// function callApi(method, url, data) {
+//     $.ajax({
+//         method: method,
+//         url: url,
+//         data: data
+//     }).done(function( msg ) {
+//         window.location.reload();
+//     });
+// }
+
+
 function callApi(method, url, data) {
     $.ajax({
         method: method,
         url: url,
-        data: data
-    }).done(function( msg ) {
+        data: JSON.stringify(data),
+        contentType: "application/json"
+    }).done(function(response) {
+        alert("Product inserted!");
         window.location.reload();
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert("Error: " + errorThrown);
+        console.error(jqXHR.responseText);
     });
 }
+
+
+
 
 function calculateValue() {
     var total = 0;

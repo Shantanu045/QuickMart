@@ -1,4 +1,7 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+app = Flask(__name__)
+CORS(app)
 from sql_connection import get_sql_connection
 import mysql.connector
 import json
@@ -25,15 +28,23 @@ def get_products():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# @app.route('/insertProduct', methods=['POST'])
+# def insert_product():
+#     request_payload = json.loads(request.form['data'])
+#     product_id = products_dao.insert_new_product(connection, request_payload)
+#     response = jsonify({
+#         'product_id': product_id
+#     })
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
+
 @app.route('/insertProduct', methods=['POST'])
 def insert_product():
-    request_payload = json.loads(request.form['data'])
+    request_payload = request.get_json()
     product_id = products_dao.insert_new_product(connection, request_payload)
-    response = jsonify({
-        'product_id': product_id
-    })
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response = jsonify({'product_id': product_id})
     return response
+
 
 @app.route('/getAllOrders', methods=['GET'])
 def get_all_orders():
