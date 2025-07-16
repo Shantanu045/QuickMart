@@ -4,7 +4,7 @@ services:
     env: python
     region: oregon
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn server:app"
+    startCommand: "server.py"
     plan: free
     envVars:
       - key: FLASK_ENV
